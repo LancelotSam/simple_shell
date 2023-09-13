@@ -12,7 +12,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
 	ssize_t read_chars;
 	char *new_buff;
-	size_t current_position;
+	size_t current_position = 0;
 
 	if (lineptr == NULL || n == NULL || stream == NULL)
 	{
@@ -21,7 +21,8 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	}
 	if (*lineptr == NULL)
 	{
-		*lineptr = malloc(sizeof(char) * 128);
+		*n = 128; /* Set initial buffer size*/
+		*lineptr = malloc(sizeof(char) * *n);
 		if (*lineptr == NULL)
 		{
 			perror("memory allocation failed");
@@ -49,12 +50,14 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		}
 		read_chars = fgetc(stream);
 	}
+
 	(*lineptr)[current_position] = '\0';
+
 	if (current_position == 0 && read_chars == EOF)
 	{
 		perror("no chars read");
 		return (-1);
 	}
+
 	return (current_position);
 }
-

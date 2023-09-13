@@ -12,7 +12,7 @@ char *read_line(void)
 	size_t buffer = 0;
 	ssize_t read_inp;
 
-	read_inp = getline(&lineptr, &buffer, stdin);
+	read_inp = _getline(&lineptr, &buffer, stdin);
 
 	if (read_inp == -1 || read_inp == EOF)
 	{
@@ -50,11 +50,11 @@ char **split_line(char *lineptr)
 	if (args_tokens == NULL)
 		return (NULL);
 
-	token = strtok(lineptr, delimiter);
+	token = _strtok(lineptr, delimiter);
 	while (token != NULL && args_index < MAX_ARGS)
 	{
 		args_tokens[args_index++] = token;
-		token = strtok(NULL, delimiter);
+		token = _strtok(NULL, delimiter);
 	}
 	args_tokens[args_index] = NULL;
 

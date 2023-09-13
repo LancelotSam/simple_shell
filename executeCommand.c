@@ -53,62 +53,71 @@ int executeCommand(char **args)
 		}
 		/* If command is in relative path i.e just the name */
 		path = getenv("PATH");
-		if (path == NULL) {
+		if (path == NULL)
+		{
 			perror("Failed to get the PATH environment variable.");
-			return -1;
+			return (-1);
 		}
 
 		/* Tokenize the PATH by ':' delimiter */
-		token = strtok(_strdup(path), ":");
-		while (token != NULL) {
+		token = _strtok(_strdup(path), ":");
+		while (token != NULL)
+		{
 			/* Construct the full path of the command */
 			fullPath = malloc(sizeof(char) * (_strlen(token) + _strlen(command) + 2));
-			if (fullPath == NULL) {
+			if (fullPath == NULL)
+			{
 				perror("Failed to allocate memory for the full path.");
-				return -1;
+				return (-1);
 			}
 
-			strcpy(fullPath, token);
-			strcat(fullPath, "/");
-			strcat(fullPath, command);
+			_strcpy(fullPath, token);
+			_strcat(fullPath, "/");
+			_strcat(fullPath, command);
 
 			/* Check if the command exists at the current path */
-			if (access(fullPath, X_OK) == 0) {
+			if (access(fullPath, X_OK) == 0)
+			{
 				/* If the command is found, store the full path */
-				foundPath = strdup(fullPath);
+				foundPath = _strdup(fullPath);
 
 				pid = fork();
-				if (pid < 0) {
+				if (pid < 0)
+				{
 					perror("Failed to fork a child process.");
 					free(fullPath);
-					return -1;
-				} else if (pid == 0) {
+					return (-1);
+				} else if (pid == 0)
+				{
 					execve(foundPath, args, NULL);
 					perror("Failed to execute the command");
 					free(fullPath); /* Free after command execution*/
-					return -1; /* Exit child process*/
-				} else {
+					return (-1); /* Exit child process*/
+				} else
+				{
 					waitpid(pid, &status, 0);
 					free(fullPath); /* Free after command execution*/
-					return 0;
+					return (0);
 				}
 			}
 
 			free(fullPath);
 
 			/* Move to the next token*/
-			token = strtok(NULL, ":");
+			token = _strtok(NULL, ":");
 		}
-
 		/* Command not found in any path*/
-		if (foundPath != NULL) {
+		if (foundPath != NULL)
+		{
+
 			free(foundPath);
 			break;
-		} else {
+		} else
+		{
 			perror("Command not found.");
-			return -1;
+			return (-1);
 		}
 	}
 
-	return -1; /*This line will never be reached*/
+	return (-1); /*This line will never be reached*/
 }
