@@ -31,5 +31,6 @@ int _strlen(const char *str);
 int _strcmp(const char *s1, const char *s2);
 char *_strcat(char *dest, const char *src);
 int _atoi(const char *str);
+int cd(char **args);
 
 #endif

@@ -92,7 +92,11 @@ void MyShell(void)
 				free(args);
 				free(read_line_result);
 				exit(exit_status);
-			} else
+			}else if (_strcmp(args[0], "cd") == 0)
+			{
+				cd(args);
+			}
+			else
 			{
 				result = executeCommand(args);
 				if (result != 0)
