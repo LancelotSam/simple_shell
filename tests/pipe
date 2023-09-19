@@ -1,0 +1,65 @@
+#include "shell.h"
+
+void executePipeCommands(char **left_command, char **right_command)
+{
+    int pipefd[2];
+    pid_t left_pid, right_pid;
+
+    if (pipe(pipefd) == -1)
+    {
+        perror("Pipe failed");
+        return;
+    }
+
+    left_pid = fork();
+    if (left_pid == 0)
+    {
+        // Child process for executing left command
+        close(pipefd[0]); // Close read end of pipe
+
+        // Redirect stdout to write end of pipe
+        dup2(pipefd[1], STDOUT_FILENO);
+
+        // Execute left command
+        execvp(left_command[0], left_command);
+        
+        perror("Failed to execute left command");
+        exit(EXIT_FAILURE);
+    }
+    else if (left_pid > 0)
+    {
+        right_pid = fork();
+        if (right_pid == 0)
+        {
+            // Child process for executing right command
+            close(pipefd[1]); // Close write end of pipe
+
+            // Redirect stdin to read end of pipe
+            dup2(pipefd[0], STDIN_FILENO);
+
+            // Execute right command
+            execvp(right_command[0], right_command);
+            
+            perror("Failed to execute right command");
+            exit(EXIT_FAILURE);
+        }
+        else if (right_pid > 0)
+        {
+            // Parent process
+            close(pipefd[0]); // Close read end of pipe
+            close(pipefd[1]); // Close write end of pipe
+
+            // Wait for both child processes to finish
+            waitpid(left_pid, NULL, 0);
+            waitpid(right_pid, NULL, 0);
+        }
+        else
+        {
+            perror("Fork failed for right command");
+        }
+    }
+    else
+    {
+        perror("Fork failed for left command");
+    }
+}

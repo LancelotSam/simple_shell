@@ -12,7 +12,13 @@ char *read_line(void)
 	size_t buffer = 0;
 	ssize_t read_inp;
 
-	read_inp = _getline(&lineptr, &buffer, stdin);
+	if (isatty(STDIN_FILENO))
+	{
+		read_inp = _getline(&lineptr, &buffer, stdin);
+	} else
+	{
+		read_inp = getline(&lineptr, &buffer, stdin);
+	}
 
 	if (read_inp == -1 || read_inp == EOF)
 	{
@@ -32,6 +38,7 @@ char *read_line(void)
 
 	return (lineptr);
 }
+
 /**
  *split_line-this is the main function
  *
@@ -59,15 +66,13 @@ char **split_line(char *lineptr)
 	args_tokens[args_index] = NULL;
 
 	return (args_tokens);
-
 }
 /**
- * MyShell-this is the main function
- *
+ * interactive-this is the main function
  * It calls other functions in my custom shell
  * Return:void
  */
-void MyShell(void)
+void interactive(void)
 {
 	char *read_line_result;
 	char **args;
@@ -92,15 +97,16 @@ void MyShell(void)
 				free(args);
 				free(read_line_result);
 				exit(exit_status);
-			}else if (_strcmp(args[0], "cd") == 0)
+			} else if (_strcmp(args[0], "cd") == 0)
 			{
 				cd(args);
-			}
-			else
+			} else
 			{
 				result = executeCommand(args);
 				if (result != 0)
+				{
 					perror("Failed to execute command");
+				}
 			}
 		}
 		if (read_line_result[0] == '\0')
@@ -108,7 +114,6 @@ void MyShell(void)
 			write(STDOUT_FILENO, "$ ", 2);
 			fflush(stdout);
 		}
-
 		free(args);
 		free(read_line_result);
 	}

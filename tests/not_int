@@ -1,0 +1,25 @@
+#include "shell.h"
+
+void non_interactive(void)
+{
+	char *read_line_result;
+	char **args;
+	int result;
+
+	while ((read_line_result = read_line(stdin)) != NULL)
+	{
+		args = split_line(read_line_result);
+		if (args != NULL && args[0] != NULL)
+		{
+			result = executeCommand(args);
+			if (result != 0)
+			{
+				perror("Failed to execute command");
+			}
+		}
+
+		free(args);
+		free(read_line_result);
+	}
+}
+

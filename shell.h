@@ -14,8 +14,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-void MyShell(void);
-char *read_line(void);
+void non_interactive(void);
+void interactive(void);
+char *read_line();
 char **split_line(char *lineptr);
 extern char **environ;
 int env(char **args);
@@ -32,5 +33,6 @@ int _strcmp(const char *s1, const char *s2);
 char *_strcat(char *dest, const char *src);
 int _atoi(const char *str);
 int cd(char **args);
+void non_interactive(void);
 
 #endif
