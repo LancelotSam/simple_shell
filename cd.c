@@ -53,5 +53,6 @@ int cd(char **args)
 		perror("Error getting cwd");
 		return (-1);
 	}
+	free(newDir);
 	return (0);
 }

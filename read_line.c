@@ -64,3 +64,36 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 
 	return (current_position);
 }
+/**
+ * read_line-this is the main function
+ *
+ * it reads user input from stdin
+ *
+ * Return: returns lineptr
+ */
+char *read_line(void)
+{
+	char *lineptr = NULL;
+	size_t buffer = 0;
+	ssize_t read_inp;
+
+	read_inp = _getline(&lineptr, &buffer, stdin);
+
+	if (read_inp == -1 || read_inp == EOF)
+	{
+		perror("Exiting shell");
+		free(lineptr);
+		exit(EXIT_SUCCESS);
+	} else if (read_inp == 1)
+	{
+		perror("Empty line");
+		lineptr = malloc(2); /* mem for '\n' and '\0'*/
+		lineptr[0] = '\n';
+		lineptr[1] = '\0';
+	} else if (lineptr[read_inp - 1] == '\n')
+	{
+		lineptr[read_inp - 1] = '\0';
+	}
+
+	return (lineptr);
+}

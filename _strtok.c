@@ -3,8 +3,8 @@
  * _strtok-this is the main function
  *
  * It tokenizes a string
- * @str: teh string to be tokenized
- * @delim: teh delimite rto be used to split the string
+ * @str: the string to be tokenized
+ * @delim: the delimiter to be used to split the string
  * Return: tokens of splitted string
  */
 char *_strtok(const char *str, const char *delim)

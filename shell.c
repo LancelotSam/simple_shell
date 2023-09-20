@@ -6,7 +6,7 @@
  *
  * Return: returns lineptr
  */
-char *read_line(void)
+/*char *read_line(void)
 {
 	char *lineptr = NULL;
 	size_t buffer = 0;
@@ -28,7 +28,7 @@ char *read_line(void)
 	} else if (read_inp == 1)
 	{
 		perror("Empty line");
-		lineptr = malloc(2); /* mem for '\n' and '\0'*/
+		lineptr = malloc(2); * mem for '\n' and '\0'*
 		lineptr[0] = '\n';
 		lineptr[1] = '\0';
 	} else if (lineptr[read_inp - 1] == '\n')
@@ -38,7 +38,7 @@ char *read_line(void)
 
 	return (lineptr);
 }
-
+*/
 /**
  *split_line-this is the main function
  *
