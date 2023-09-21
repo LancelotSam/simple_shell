@@ -1,9 +1,8 @@
 #include "shell.h"
 /**
- * executecommand-this is the main function
- *
- * it searchesd and executes commands
- * @args:the argumnets received from stdin
+ * executeCommand-this is the main function
+ * it searches and executes commands
+ * @args: the argumnets received from stdin
  * Return:0 if successful, -1 if not
  */
 int executeCommand(char **args)
