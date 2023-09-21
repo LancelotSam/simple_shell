@@ -14,9 +14,9 @@ char *_strtok(const char *str, const char *delim)
 	size_t token_length;
 	char *token_copy;
 
+	last_token = NULL;
 	if (str != NULL)
 	{
-		last_token = NULL;
 		last_token = str;
 	}
 	else

@@ -1,38 +1,36 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#define MAX_ARGS 10
-#define MAX_TOTAL_LENGTH 1024
-#define MAX_PATHS 10
-
+#define MAX_ARGS 64
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <stddef.h> /*for size*/
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
+#include <limits.h>
+#include <fcntl.h>
+#include <errno.h>
 
-void non_interactive(void);
-void interactive(void);
-char *read_line();
-char **split_line(char *lineptr);
+#define TOKEN_DELIM " \n\t\r\a\""
+
 extern char **environ;
-int env(char **args);
+void interactive(char *name);
+void non_interactive(char *name);
+int my_cd(char **args);
+char *read_line(void);
+char **split_line(char *command);
+int my_env(char **args);
 int my_exit(char **args);
-int executeCommand(char **args);
-char *_strncpy(char *dest, const char *src, size_t n);
-const char *_strchr(const char *str, int c);
-char *_strtok(const char *str, const char *delim);
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
-char *_strdup(const char *src);
-char *_strcpy(char *dest, const char *src);
-int _strlen(const char *str);
-int _strcmp(const char *s1, const char *s2);
-char *_strcat(char *dest, const char *src);
-int _atoi(const char *str);
-int cd(char **args);
-void non_interactive(void);
+int executeCommand(char **argv, char *name);
+int system_call(char **args, char *name);
+int search_command(char *full_path, char **args);
+char *read_input(void);
+int my_pipe(char *args[]);
+int semiColon(char *args[]);
+void execute_Command(char **commandArgs);
+int semiColon(char *args[]);
 
 #endif
+

@@ -1,23 +1,22 @@
 #include "shell.h"
 /**
- * env-this is the main function
+ * my_env - this is the main function
+ * it prints the enviroment
+ * @args:an array of all variables in string
  *
- * It prints the environment of the system
- * @args:the list of arguments received
- * Return: 0 if successful
+ * Return: an integer status
  */
-int env(char **args)
+int my_env(char **args)
 {
-	int count = 0;
+	int i = 0;
 
 	args = environ;
 
-	while (args[count])
+	while (args[i])
 	{
-		write(STDOUT_FILENO, environ[count], _strlen(environ[count]));
-		/*fwrite(environ[count], strlen(environ[count]), 1, stdout);*/
+		write(STDOUT_FILENO, environ[i], strlen(environ[i]));
 		write(STDOUT_FILENO, "\n", 1);
-		count++;
+		i++;
 	}
-	return (0);
+	return (-1);
 }
