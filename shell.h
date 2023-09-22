@@ -27,10 +27,7 @@ int executeCommand(char **argv, char *name);
 int system_call(char **args, char *name);
 int search_command(char *full_path, char **args);
 char *read_input(void);
-int my_pipe(char *args[]);
-int semiColon(char *args[]);
 void execute_Command(char **commandArgs);
-int semiColon(char *args[]);
 
 #endif
 

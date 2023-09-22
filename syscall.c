@@ -10,17 +10,8 @@
 int system_call(char **args, char *name)
 {
 	char path[1024], *main_path = getenv("PATH"), *directory;
-	int index = 0;
 	char full_path[256];
 
-	while (args[index] != NULL)
-	{
-		if (strcmp(args[index], "|") == 0)
-		{
-			return (my_pipe(args));
-		}
-		index++;
-	}
 	if (access(args[0], X_OK) == 0)
 	{
 		return (search_command(args[0], args));
