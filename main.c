@@ -9,11 +9,11 @@
  */
 int main(int argc, char *args[])
 {
-        int fd = STDIN_FILENO;
+	int fd = STDIN_FILENO;
 
-        if (isatty(fd) == 1)
-                interactive(args[argc - 1]);
-        else
-                non_interactive(args[argc - 1]);
-        return (0);
+	if (isatty(fd) == 1)
+		interactive(args[argc - 1]);
+	else
+		non_interactive(args[argc - 1]);
+	return (0);
 }
