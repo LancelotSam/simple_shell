@@ -21,7 +21,7 @@ char **split_line(char *line)
 	token = strtok(line, TOKEN_DELIM);
 	while (token != NULL)
 	{
-		if (tokesn[0] != '#')/*token not a comment*/
+		if (token[0] != '#')/*token not a comment*/
 		{
 			tokens[index] = token;
 			index++;
@@ -37,6 +37,8 @@ char **split_line(char *line)
 			}
 			token = strtok(NULL, TOKEN_DELIM);
 		}
-		tokens[index] = NULL;
-		return (tokens);
 	}
+	tokens[index] = NULL;
+	return (tokens);
+}
+
