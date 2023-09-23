@@ -15,10 +15,15 @@ void interactive(char *name)
 	{
 		write(0, "$ ", 2);
 		line = read_line();
+		if (line[0] == '#')
+		{
+			free(line);
+			continue;
+		}
 		args = split_line(line);
 		execute_status = executeCommand(args, name);
-		free(line);
 		free(args);
+		free(line);
 		if (execute_status >= 0)
 		{
 			exit(execute_status);

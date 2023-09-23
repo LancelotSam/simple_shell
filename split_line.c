@@ -1,9 +1,9 @@
 #include "shell.h"
 /**
- * split_line - this fuction tokinezes string and added into an array
- * @line: comands in the string
- *
- * Return: an array of string
+ * split_line-this is the main function
+ * it splits lineptr input
+ * @line:the input to be split
+ * Return: splitted chars
  */
 char **split_line(char *line)
 {
@@ -41,4 +41,3 @@ char **split_line(char *line)
 	tokens[index] = NULL;
 	return (tokens);
 }
-
