@@ -29,6 +29,13 @@ char *read_line(void)
 			line[i] = '\0';
 			return (line);
 		}
+		else if (character == '#' && i == 0)
+		{
+			while (character != '\n' && character != EOF)
+				;/*skips the rest of teh fline*/
+			free(line);
+			return (NULL); /*indicate a comment line*/
+		}
 		else
 		{
 			line[i] = character;
