@@ -29,6 +29,6 @@ int system_call(char **args, char *name)
 		}
 		directory = strtok(NULL, ":");
 	}
-	perror(name);
+	perror("name");
 	return (-1);
 }

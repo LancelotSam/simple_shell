@@ -21,20 +21,22 @@ char **split_line(char *line)
 	token = strtok(line, TOKEN_DELIM);
 	while (token != NULL)
 	{
-		tokens[index] = token;
-		index++;
-		if (index >= buffer_size)
+		if (tokesn[0] != '#')/*token not a comment*/
 		{
-			buffer_size += buffer_size;
-			tokens = realloc(tokens, buffer_size * sizeof(char *));
-			if (tokens == NULL)
+			tokens[index] = token;
+			index++;
+			if (index >= buffer_size)
 			{
-				perror("reallocation failed");
-				exit(EXIT_FAILURE);
+				buffer_size += buffer_size;
+				tokens = realloc(tokens, buffer_size * sizeof(char *));
+				if (tokens == NULL)
+				{
+					perror("reallocation failed");
+					exit(EXIT_FAILURE);
+				}
 			}
+			token = strtok(NULL, TOKEN_DELIM);
 		}
-		token = strtok(NULL, TOKEN_DELIM);
+		tokens[index] = NULL;
+		return (tokens);
 	}
-	tokens[index] = NULL;
-	return (tokens);
-}
