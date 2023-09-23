@@ -36,10 +36,7 @@ char *read_line(void)
 			free(line);
 			return (NULL); /*indicate a comment line*/
 		}
-		else
-		{
-			line[i] = character;
-		}
+		line[i] = character;
 		i++;
 		if (i >= bufsize)
 		{

@@ -1,0 +1,51 @@
+#include "shell.h"
+/**
+ * read_line - reads user input
+ *
+ * Return: a string read from user
+ */
+char *read_line(void)
+{
+	int bufsize = 1024;
+	int i = 0;
+	char *line = malloc(sizeof(char) * bufsize);
+	int character;
+
+	if (!line)
+	{
+		perror("allocation error in read_stream");
+		exit(EXIT_FAILURE);
+	}
+
+	while ((character = getchar()) != '\n' && character != EOF)
+	{
+		if (i == 0 && character == '#')
+		{
+			while ((character = getchar()) != '\n' && character != EOF)
+				;
+			break;
+		}
+
+		line[i++] = character;
+
+		if (i >= bufsize)
+		{
+			bufsize += bufsize;
+			line = realloc(line, bufsize);
+			if (!line)
+			{
+				perror("reallocation error in read_stream");
+				exit(EXIT_FAILURE);
+			}
+		}
+	}
+
+	if (i == 0 && character == EOF)
+	{
+		free(line);
+		exit(EXIT_SUCCESS);
+	}
+
+	line[i] = '\0';
+	return (line);
+}
